@@ -37,7 +37,7 @@ object StepOne {
            |""".stripMargin)
   
     // Now uncomment the next line to run exercise 2 (and see below for the instructions)
-    // exercise2()
+    exercise2()
 
   }
 
@@ -59,8 +59,8 @@ object StepOne {
     var x:Int = 0
 
     // EXERCISE 2b: Try changing x to 3 and see what happens
-    // i = 3
-    // println(s"x is now $x")
+    x = 3
+    println(s"x is now $x")
 
 
     // Below is a function. 
@@ -77,7 +77,8 @@ object StepOne {
     }
 
     // EXERCISE 2c: Use println and twice functions to print out what twice 128 is
-    // <<Your code goes here>>
+    println(roman(1853))
+
 
     // Now you've completed exercise 2, exercise 3 will involve running the tests
   }
@@ -122,9 +123,13 @@ object StepOne {
       Use a while loop to double every entry in an array
     */
   def doubleArray(arr:Array[Int]):Array[Int] = {
-    ??? //  ??? is shorthand for "throw a not-implemented-yet exception". 
-
-    
+    //  ??? is shorthand for "throw a not-implemented-yet exception".
+    var i = 0
+    while(i<arr.length){
+      arr(i) = arr(i)*2
+      i+=1
+    }
+    arr
     // remember, you don't need to use "return" in Scala. 
     // A function evaluates to the last expression in the function
   }
@@ -137,7 +142,12 @@ object StepOne {
       Use a similar while loop as before
     */
   def timesPosition(arr:Array[Int]):Array[Int] = {
-    ???
+    var i = 0
+    while(i<arr.length){
+      arr(i) = arr(i)*i
+      i+=1
+    }
+    arr
   }
 
   /**
@@ -163,8 +173,7 @@ object StepOne {
     // The test just wants to verify these two lists are equal, even though they've been declared differently
     // So to make the test pass, you should just be able to uncomment the next line
 
-    ???
-    // list == sameList
+    list == sameList
   }
 
   def theseAreAlsoEqual():Boolean = {
@@ -181,8 +190,7 @@ object StepOne {
     // (everything but the first element)
     val listC = List(0, 1, 2, 3, 4, 5, 6, 7).tail
 
-    ???
-    // listA == listB && listB == listC
+    listA == listB && listB == listC
   }
 
 
@@ -197,10 +205,11 @@ object StepOne {
       and then converting it back to a new List.
     */
   def doubleList(arr:List[Int]):List[Int] = {
-    // val a = arr.toArray
-    // ...
-    // b.toList
-    ???
+    val a = arr.toArray
+    val b=doubleArray(a)
+
+    b.toList
+
   }
 
 
@@ -225,8 +234,8 @@ object StepOne {
     val listOfTupsA:List[(Int, Char)] = 1 -> 'a' :: 2 -> 'b' :: 3 -> 'c' :: Nil
     val listOfTupsB:List[(Int, Char)] = List((1, 'a'), (2, 'b'), (3, 'c'))
     
-    // listOfTupsA == listOfTupsB
-    ???
+    listOfTupsA == listOfTupsB
+
   }
 
 
@@ -250,20 +259,47 @@ object StepOne {
     * and whose tail is the old list)
     */
   def matchingLetters(wordA:String, wordB:String):List[(Int, Int)] = {
+    var list:List[(Int,Int)]=Nil
 
-    ???
-
+    var i=0
+    var j=0
+    while (i<wordA.length){
+      j=0
+      while (j<wordB.length){
+        if(wordA.charAt(i)==wordB.charAt(j)){
+          list = (i,j) :: list
+        }
+        j+=1
+      }
+      i+=1
+    }
+    list
   }
 
   /**
     * And let's finish with a little challenge: Write a function that can translate a number into Roman numerals
     */
-  def roman(i:Int):String = ???
-
-
-  /*
-   * Ok, that should have introduced you to enough basic syntax to get started.
-   * If you're after more exercises to try, have a look at exercism.io
-   */
-
+  def roman(i:Int,x:Int=1):String = {
+    val numerals:List[(String,Int)]="I"->1::"IV"->4::"V"->5::"IX"->9::"X"->10::"L"->50::"XC"->90::"C"->100::"D"->500::"CM"->900::"M"->1000::Nil
+    if(i==0) ""
+    else if(numerals(numerals.length-x)._2<=i) numerals(numerals.length-x)._1.toString()+roman(i-numerals(numerals.length-x)._2,x)
+    else roman(i,x+1)
+  }
+//  val numerals:List[(String,Int)]="I"->1::"IV"->4::"V"->5::"IX"->9::"X"->10::"L"->50::"XC"->90::"C"->100::"D"->500::"CM"->900::"M"->1000::Nil
+//
+//  var output:String=""
+//  var j=numerals.length-1
+//  var value=i
+//  var current:Int=numerals(j)._2
+//
+//  while(value>0){
+//    current=numerals(j)._2
+//    if(current<=value){
+//      value=value-numerals(j)._2
+//      output=output+numerals(j)._1.toString()
+//    }else {
+//      j -= 1
+//    }
+//  }
+//  output
 }
